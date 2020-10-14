@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import simpledialog
 import os
 
 root = Tk()
@@ -10,11 +11,63 @@ opened_file = ""
 opened_folder_level1 = ""
 opened_folder_level2 = ""
 
+def add_element(listbox):
+    print(wert_folder_file.get())
+
+    if listbox == "1":
+        if wert_folder_file.get() == "folder":
+            folder_name = simpledialog.askstring("Input", "Please give the folder a name:")
+
+            folder_path = os.path.join("notes", folder_name)
+            os.makedirs(folder_path)
+
+            status.config(text="Created folder: " + folder_path)
+            print("Create folder "+ folder_name+ " in textbox1 ")
+        else:
+            file_name = simpledialog.askstring("Input", "Please give the file a name:") + ".txt"
+
+            file_path = os.path.join("notes", file_name)
+            with open(file_path, "w") as file:
+                file.write("")
+
+            status.config(text="Created file: " + file_path)
+            print("Create file in textbox 1")
+    elif listbox == "2":
+        if wert_folder_file.get() == "folder":
+            folder_name = simpledialog.askstring("Input", "Please give the folder a name:")
+
+            folder_path = os.path.join("notes", opened_folder_level1, folder_name)
+            os.makedirs(folder_path)
+
+            status.config(text="Created folder: " + folder_path)
+            print("Create folder "+ folder_name+ " in textbox2 ")
+        else:
+            file_name = simpledialog.askstring("Input", "Please give the file a name:") + ".txt"
+
+            file_path = os.path.join("notes", opened_folder_level1,file_name)
+            with open(file_path, "w") as file:
+                file.write("")
+
+            status.config(text="Created file: " + file_path)
+            print("Create file in textbox 2")
+    elif listbox == "3":
+        if wert_folder_file.get() == "folder":
+            status.config(text="You cant make dictonarys up here! Haha Opfer")
+        else:
+            file_name = simpledialog.askstring("Input", "Please give the file a name:") + ".txt"
+
+            file_path = os.path.join("notes", opened_folder_level1,opened_folder_level2,file_name)
+            with open(file_path, "w") as file:
+                file.write("")
+
+            status.config(text="Created file: " + file_path)
+            print("Create file in textbox 2")
+
 #FRAME BUTTONS
 frame_buttons_1 = Frame(master=root, background="blue")
-frame_buttons_1.place(x=0, y=0, width=700, height=30)
+frame_buttons_1.place(x=0, y=0, width=200, height=30)
 
-button_1_add = Button(master=frame_buttons_1, text="ADD")
+button_1_add = Button(master=frame_buttons_1, text="ADD", command= lambda:add_element("1"))
 button_1_add.place(x=0, y=0, width=35, height=25)
 button_1_del = Button(master=frame_buttons_1, text="DEL")
 button_1_del.place(x=40, y=0, width=35, height=25)
@@ -22,9 +75,9 @@ button_1_edit = Button(master=frame_buttons_1, text="EDIT")
 button_1_edit.place(x=80, y=0, width=35, height=25)
 
 frame_buttons_2 = Frame(master=root, background="blue")
-frame_buttons_2.place(x=220, y=0, width=700, height=30)
+frame_buttons_2.place(x=220, y=0, width=200, height=30)
 
-button_2_add = Button(master=frame_buttons_2, text="ADD")
+button_2_add = Button(master=frame_buttons_2, text="ADD", command= lambda:add_element("2"))
 button_2_add.place(x=0, y=0, width=35, height=25)
 button_2_del = Button(master=frame_buttons_2, text="DEL")
 button_2_del.place(x=40, y=0, width=35, height=25)
@@ -32,14 +85,22 @@ button_2_edit = Button(master=frame_buttons_2, text="EDIT")
 button_2_edit.place(x=80, y=0, width=35, height=25)
 
 frame_buttons_3 = Frame(master=root, background="blue")
-frame_buttons_3.place(x=440, y=0, width=700, height=30)
+frame_buttons_3.place(x=440, y=0, width=300, height=30)
 
-button_3_add = Button(master=frame_buttons_3, text="ADD")
+button_3_add = Button(master=frame_buttons_3, text="ADD", command= lambda:add_element("3"))
 button_3_add.place(x=0, y=0, width=35, height=25)
 button_3_del = Button(master=frame_buttons_3, text="DEL")
 button_3_del.place(x=40, y=0, width=35, height=25)
 button_3_edit = Button(master=frame_buttons_3, text="EDIT")
 button_3_edit.place(x=80, y=0, width=35, height=25)
+
+wert_folder_file = StringVar()
+
+radio_folder = Radiobutton(master=frame_buttons_3, text="Folder", value="folder", variable=wert_folder_file)
+radio_folder.place(x=120, y=0)
+
+radio_file = Radiobutton(master=frame_buttons_3, text="File", value="file", variable=wert_folder_file)
+radio_file.place(x=185, y=0)
 
 #FRAME LISTBOXEN
 frame_listboxen = Frame(master=root, background="red")
@@ -71,18 +132,18 @@ scrollbar_listbox_3.place(x=640, y=0, height=200)
 
 #FRAME titlebar
 frame_main = Frame(master=root, background="green")
-frame_main.place(x=0, y=230, width=400, height=25)
+frame_main.place(x=0, y=230, width=700, height=25)
 
 def save_file(event):
     global opened_file
     text_file = open(opened_file, "w")
     text_file.write(main_text.get(1.0, END))
-    saved_message = "Saved " + opened_file 
+    saved_message = "Saved file " + opened_file 
     status.config(text=saved_message)
 
 root.bind('<F3>', save_file)
 
-button_save = Button(master=frame_main, text="Save", command=save_file)
+button_save = Button(master=frame_main, text="Save", command=lambda:save_file("fuck_arguments_needed"))
 button_save.place(x=0, y=0, width=45, height=25)
 
 label_filename = Label(master=frame_main, text="Test")
@@ -117,9 +178,12 @@ def list_root_directory(event):
     root = os.listdir("notes")
 
     listbox_1.delete(0, END)
-
+    listbox_2.delete(0, END)
+    listbox_3.delete(0, END)
     for items in root:
         listbox_1.insert(END, items)
+
+    status.config(text="Reloadet Elements")
 
 root.bind('<F2>',list_root_directory)
 
@@ -138,12 +202,17 @@ def list_dir_1(event):
         main_text.delete("1.0", END)
         main_text.insert(END, stuff)
         opened_file = directory
+
         label_filename.config(text=directory)
-        print("Opened File: " + opened_file)        
+        print("Opened File: " + opened_file) 
+
+        loadet_message = "Loadet file " + opened_file
+        status.config(text=loadet_message)       
     else:
         folder_level2 = os.listdir(directory)
         listbox_2.delete(0, END)
         listbox_3.delete(0, END)
+
         for items in folder_level2:
             listbox_2.insert(0, items)
         opened_folder_level1 = value
@@ -165,16 +234,44 @@ def list_dir_2(event):
         stuff = text_file.read()
         main_text.delete("1.0", END)
         main_text.insert(END, stuff)
+
         opened_file = directory
+
         label_filename.config(text=directory)
-        print("Opened File: " + opened_file)        
+        print("Opened File: " + opened_file)
+        loadet_message = "Loadet file " + opened_file
+        status.config(text=loadet_message)        
     else:
         folder_level3 = os.listdir(directory)
         listbox_3.delete(0, END)
+
         for items in folder_level3:
             listbox_3.insert(0, items)
         opened_folder_level2 = value
 
 listbox_2.bind('<<ListboxSelect>>', list_dir_2)
+
+def list_dir_3(event):
+    global opened_file, opened_folder_level1, opened_folder_level2
+    w = event.widget
+    idx = int(w.curselection()[0])
+    value = w.get(idx)
+
+    directory = os.path.join("notes" , opened_folder_level1, opened_folder_level2, value)
+    print("Ausgewählter Ordner: " + directory)
+
+    text_file = open(directory, "r")
+    stuff = text_file.read()
+    main_text.delete("1.0", END)
+    main_text.insert(END, stuff)
+
+    opened_file = directory
+
+    label_filename.config(text=directory)
+    loadet_message = "Loadet file " + opened_file
+    status.config(text=loadet_message)
+    print("Opened File: " + opened_file)        
+
+listbox_3.bind('<<ListboxSelect>>', list_dir_3)
 
 mainloop()
