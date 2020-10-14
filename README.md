@@ -13,3 +13,16 @@ first document dont get deleted.
 **F2** Reloading the root-folder view (Its like pressing F5 in your browser, you refresh the root folder. The before opened folders get closed.) <br>
 **F3** Saved opened .txt file <br>
 **F4** Open the root-folder in the OS explorer (For manually editing and moving the files) <br>
+
+# What features functions 
+-Open up all files and folders in the folderview
+-Make new .txt documents and folders
+-Load up .txt documents
+-Save .txt documents
+
+# What needs to get done?
+-Delete files and folders
+-Rename folders
+
+# Future plans
+-Moving folders and files
