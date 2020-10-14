@@ -11,5 +11,7 @@ first document dont get deleted.
 #Keyboard shortcuts
 
 **F2** Reloading the root-folder view (Its like pressing F5 in your browser, you refresh the root folder. The before opened folders get closed.)
+
 **F3** Saved opened .txt file
+
 **F4** Open the root-folder in the OS explorer (For manually editing and moving the files)
