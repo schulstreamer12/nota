@@ -8,7 +8,7 @@ Note:
 This app dont have auto save! When you have a .txt opened and you open another textdocument the text from the
 first document dont get deleted.
 
-#Keyboard shortcuts
+# Keyboard shortcuts
 
 **F2** Reloading the root-folder view (Its like pressing F5 in your browser, you refresh the root folder. The before opened folders get closed.) <br>
 **F3** Saved opened .txt file <br>
