@@ -4,9 +4,11 @@ A simple File Editor with a Folderview
 Yes that was the only idea I had when I get this project started.
 I want a notepad, where you can organize your notes in folders, and it should be completley free from clouds-saving and etc.
 
-Note:
+# Good to know / About the program / oddities
+Note: <br>
 This app dont have auto save! When you have a .txt opened and you open another textdocument the text from the
-first document dont get deleted.
+first document dont get deleted. <br>
+The txt files gets saved in the notes folder, which is located in the program folder.
 
 # Keyboard shortcuts
 
