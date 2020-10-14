@@ -1,4 +1,4 @@
-# nota-The idea behind it
+# nota -The idea behind it
 A simple File Editor with a Folderview
 
 Yes that was the only idea I had when I get this project started.
