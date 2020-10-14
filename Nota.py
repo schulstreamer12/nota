@@ -274,4 +274,10 @@ def list_dir_3(event):
 
 listbox_3.bind('<<ListboxSelect>>', list_dir_3)
 
+def open_explorer(event):
+    dirname, filename = os.path.split(os.path.abspath(__file__))
+    dirname = os.path.join(dirname,"notes")
+    os.system(f'start {os.path.realpath(dirname)}')
+
+root.bind('<F4>', open_explorer)
 mainloop()
