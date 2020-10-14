@@ -15,14 +15,14 @@ first document dont get deleted.
 **F4** Open the root-folder in the OS explorer (For manually editing and moving the files) <br>
 
 # What features functions 
--Open up all files and folders in the folderview
--Make new .txt documents and folders
--Load up .txt documents
--Save .txt documents
+-Open up all files and folders in the folderview <br>
+-Make new .txt documents and folders <br>
+-Load up .txt documents <br>
+-Save .txt documents <br>
 
 # What needs to get done?
--Delete files and folders
--Rename folders
+-Delete files and folders <br>
+-Rename folders <br>
 
 # Future plans
--Moving folders and files
+-Moving folders and files <br>
