@@ -1,5 +1,6 @@
 from tkinter import *
 from tkinter import simpledialog
+import shutil
 import os
 
 root = Tk()
@@ -14,12 +15,14 @@ opened_folder_level2 = ""
 def add_element(listbox):
     print(wert_folder_file.get())
 
+
     if listbox == "1":
         if wert_folder_file.get() == "folder":
             folder_name = simpledialog.askstring("Input", "Please give the folder a name:")
 
             folder_path = os.path.join("notes", folder_name)
             os.makedirs(folder_path)
+            listbox_1.insert(END, folder_name)
 
             status.config(text="Created folder: " + folder_path)
             print("Create folder "+ folder_name+ " in textbox1 ")
@@ -30,6 +33,8 @@ def add_element(listbox):
             with open(file_path, "w") as file:
                 file.write("")
 
+            listbox_1.insert(END, file_name)
+            
             status.config(text="Created file: " + file_path)
             print("Create file in textbox 1")
     elif listbox == "2":
@@ -38,6 +43,7 @@ def add_element(listbox):
 
             folder_path = os.path.join("notes", opened_folder_level1, folder_name)
             os.makedirs(folder_path)
+            listbox_2.insert(END, folder_name)
 
             status.config(text="Created folder: " + folder_path)
             print("Create folder "+ folder_name+ " in textbox2 ")
@@ -47,6 +53,8 @@ def add_element(listbox):
             file_path = os.path.join("notes", opened_folder_level1,file_name)
             with open(file_path, "w") as file:
                 file.write("")
+
+            listbox_2.insert(END, file_name)
 
             status.config(text="Created file: " + file_path)
             print("Create file in textbox 2")
@@ -60,36 +68,99 @@ def add_element(listbox):
             with open(file_path, "w") as file:
                 file.write("")
 
+            listbox_3.insert(END, file_name)
+
             status.config(text="Created file: " + file_path)
             print("Create file in textbox 2")
 
+def delete_element(listbox):
+    if listbox == "1":
+        selected_item = listbox_1.get(listbox_1.curselection())
+        selected_index = listbox_1.curselection()
+        element_path = os.path.join("notes", selected_item)
+
+        print("selected item 1: " + selected_item)
+        deleted_status = "Deleted " + element_path
+
+        if selected_item.endswith(".txt"):
+            os.remove(element_path)
+            
+        else:
+            shutil.rmtree(element_path)
+        status.config(text=deleted_status)
+        listbox_1.delete(selected_index)
+            
+    elif listbox == "2":
+        selected_item = listbox_2.get(listbox_2.curselection())
+        selected_index = listbox_2.curselection()
+        element_path = os.path.join("notes", opened_folder_level1 ,selected_item)
+
+        print("selected item 2: " + selected_item)
+        deleted_status = "Deleted " + element_path
+
+        if selected_item.endswith(".txt"):
+            os.remove(element_path)
+            
+        else:
+            shutil.rmtree(element_path)
+        status.config(text=deleted_status)
+        listbox_2.delete(selected_index)
+
+    elif listbox == "3":
+        selected_item = listbox_3.get(listbox_3.curselection())
+        selected_index = listbox_3.curselection()
+        element_path = os.path.join("notes", opened_folder_level1 , opened_folder_level2 ,selected_item)
+
+        print("selected item 1: " + selected_item)
+        deleted_status = "Deleted " + element_path
+
+        if selected_item.endswith(".txt"):
+            os.remove(element_path)
+            
+        else:
+            shutil.rmtree(element_path)
+        status.config(text=deleted_status)
+        listbox_3.delete(selected_index)
+
 #FRAME BUTTONS
 frame_buttons_1 = Frame(master=root, background="blue")
-frame_buttons_1.place(x=0, y=0, width=200, height=30)
+frame_buttons_1.place(x=0, y=0, width=220, height=30)
 
 button_1_add = Button(master=frame_buttons_1, text="ADD", command= lambda:add_element("1"))
 button_1_add.place(x=0, y=0, width=35, height=25)
-button_1_del = Button(master=frame_buttons_1, text="DEL")
+button_1_del = Button(master=frame_buttons_1, text="DEL", command= lambda:delete_element("1"))
 button_1_del.place(x=40, y=0, width=35, height=25)
 button_1_edit = Button(master=frame_buttons_1, text="EDIT")
 button_1_edit.place(x=80, y=0, width=35, height=25)
 
+button_1_move_left = Button(master=frame_buttons_1, text="<")
+button_1_move_left.place(x=175, y=0, width=20, height=25)
+
+button_1_move_right = Button(master=frame_buttons_1, text=">")
+button_1_move_right.place(x=195, y=0, width=20, height=25)
+
 frame_buttons_2 = Frame(master=root, background="blue")
-frame_buttons_2.place(x=220, y=0, width=200, height=30)
+frame_buttons_2.place(x=220, y=0, width=220, height=30)
 
 button_2_add = Button(master=frame_buttons_2, text="ADD", command= lambda:add_element("2"))
 button_2_add.place(x=0, y=0, width=35, height=25)
-button_2_del = Button(master=frame_buttons_2, text="DEL")
+button_2_del = Button(master=frame_buttons_2, text="DEL", command= lambda:delete_element("2"))
 button_2_del.place(x=40, y=0, width=35, height=25)
 button_2_edit = Button(master=frame_buttons_2, text="EDIT")
 button_2_edit.place(x=80, y=0, width=35, height=25)
+
+button_2_move_left = Button(master=frame_buttons_2, text="<")
+button_2_move_left.place(x=175, y=0, width=20, height=25)
+
+button_2_move_right = Button(master=frame_buttons_2, text=">")
+button_2_move_right.place(x=195, y=0, width=20, height=25)
 
 frame_buttons_3 = Frame(master=root, background="blue")
 frame_buttons_3.place(x=440, y=0, width=300, height=30)
 
 button_3_add = Button(master=frame_buttons_3, text="ADD", command= lambda:add_element("3"))
 button_3_add.place(x=0, y=0, width=35, height=25)
-button_3_del = Button(master=frame_buttons_3, text="DEL")
+button_3_del = Button(master=frame_buttons_3, text="DEL", command= lambda:delete_element("3"))
 button_3_del.place(x=40, y=0, width=35, height=25)
 button_3_edit = Button(master=frame_buttons_3, text="EDIT")
 button_3_edit.place(x=80, y=0, width=35, height=25)
@@ -183,7 +254,7 @@ def list_root_directory(event):
     for items in root:
         listbox_1.insert(END, items)
 
-    status.config(text="Reloadet Elements")
+    status.config(text="Reloaded Elements")
 
 root.bind('<F2>',list_root_directory)
 
@@ -206,8 +277,8 @@ def list_dir_1(event):
         label_filename.config(text=directory)
         print("Opened File: " + opened_file) 
 
-        loadet_message = "Loadet file " + opened_file
-        status.config(text=loadet_message)       
+        loaded_message = "Loaded file " + opened_file
+        status.config(text=loaded_message)       
     else:
         folder_level2 = os.listdir(directory)
         listbox_2.delete(0, END)
@@ -239,8 +310,8 @@ def list_dir_2(event):
 
         label_filename.config(text=directory)
         print("Opened File: " + opened_file)
-        loadet_message = "Loadet file " + opened_file
-        status.config(text=loadet_message)        
+        loaded_message = "Loaded file " + opened_file
+        status.config(text=loaded_message)        
     else:
         folder_level3 = os.listdir(directory)
         listbox_3.delete(0, END)
@@ -268,8 +339,8 @@ def list_dir_3(event):
     opened_file = directory
 
     label_filename.config(text=directory)
-    loadet_message = "Loadet file " + opened_file
-    status.config(text=loadet_message)
+    loaded_message = "Loaded file " + opened_file
+    status.config(text=loaded_message)
     print("Opened File: " + opened_file)        
 
 listbox_3.bind('<<ListboxSelect>>', list_dir_3)
